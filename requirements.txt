@@ -1,0 +1,19 @@
+#requests
+datetime
+# Бібіліоткеки для відлагодження коду віддалено
+#ptvsd 
+#debugpy
+# Бібліотеки для рооти з зображеннями та відео
+# Обробка зображень та відео без GUI
+#opencv-python-headless==4.9.0.80 # Використовуйте потрібну версію
+
+# Ultralytics для YOLO
+#ultralytics==8.2.0 # Використовуйте потрібну версію
+
+# Бібліотеки для інтеграції з Azure
+azure-storage-blob
+#azure-storage-queue 
+azure-identity
+##azure-core
+pip install 
+opencv-python-headless
