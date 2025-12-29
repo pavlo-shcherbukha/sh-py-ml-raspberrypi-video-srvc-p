@@ -333,3 +333,95 @@ sudo journalctl --vacuum-time=1s
 
 Команда --rotate закриває поточні файли логів і створює нові, а --vacuum-time=1s видаляє все, що було записано раніше цієї секунди.
 
+
+## Приклад логу systemctl
+
+```log
+
+psh@raspberrypi:~ $ sudo nano /etc/systemd/system/cameramonitor.service
+psh@raspberrypi:~ $ sudo systemctl daemon-reload
+psh@raspberrypi:~ $ sudo systemctl restart cameramonitor.service
+psh@raspberrypi:~ $ sudo systemctl status cameramonitor.service
+● cameramonitor.service - RTSP Camera Monitoring Service
+     Loaded: loaded (/etc/systemd/system/cameramonitor.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2025-12-29 15:55:20 EET; 11s ago
+ Invocation: a4c90194f8e34ad18cc3cc5a09e91172
+   Main PID: 7916 (python)
+      Tasks: 4 (limit: 9566)
+        CPU: 547ms
+     CGroup: /system.slice/cameramonitor.service
+             └─7916 /opt/camera_monitor/env/bin/python /opt/camera_monitor/vcam_runner.py
+
+Dec 29 15:55:20 raspberrypi systemd[1]: Started cameramonitor.service - RTSP Camera Monitoring Service.
+Dec 29 15:55:20 raspberrypi python[7916]: 2025-12-29 15:55:20,754 - DEBUG - vcam_worker.vcam_wrkr - debug message
+Dec 29 15:55:20 raspberrypi python[7916]: 2025-12-29 15:55:20,754 - DEBUG - vcam_worker.vcam_wrkr - ===================================
+Dec 29 15:55:20 raspberrypi python[7916]: 2025-12-29 15:55:20,754 - DEBUG - vcam_worker.vcam_wrkr - ===================================
+Dec 29 15:55:20 raspberrypi python[7916]: 2025-12-29 15:55:20,754 - DEBUG - vcam_worker.vcam_wrkr - Читаю налаштування
+Dec 29 15:55:20 raspberrypi python[7916]: [tcp @ 0x3f98e760] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 15:55:20 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 15:55:31 raspberrypi python[7916]: [tcp @ 0x3f98e760] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 15:55:31 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+psh@raspberrypi:~ $ sudo systemctl stop cameramonitor.service
+psh@raspberrypi:~ $ 
+
+
+
+c 29 15:57:51 raspberrypi python[7916]: 2025-12-29 15:57:51,590 - DEBUG - vcam_worker.vcam_wrkr - Завантаження завершено!
+Dec 29 15:57:51 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Завантаження завершено!
+Dec 29 15:57:51 raspberrypi python[7916]: 2025-12-29 15:57:51,593 - DEBUG - vcam_worker.vcam_wrkr - Локальний файл 20251229-155720.avi видалено.
+Dec 29 15:57:51 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Локальний файл 20251229-155720.avi видалено.
+Dec 29 15:58:07 raspberrypi python[7916]: 2025-12-29 15:58:07,796 - DEBUG - vcam_worker.vcam_wrkr - Рух виявлено! Початок запису.
+Dec 29 15:58:07 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Рух виявлено! Початок запису.
+Dec 29 15:58:37 raspberrypi python[7916]: 2025-12-29 15:58:37,909 - DEBUG - vcam_worker.vcam_wrkr - Запис завершено.
+Dec 29 15:58:37 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Запис завершено.
+Dec 29 15:58:38 raspberrypi python[7916]: 2025-12-29 15:58:38,158 - DEBUG - vcam_worker.vcam_wrkr -
+Dec 29 15:58:38 raspberrypi python[7916]: Завантаження файлу 20251229-155807.avi до блобу 20251229-155807.avi...
+Dec 29 15:58:38 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:
+Dec 29 15:58:38 raspberrypi python[7916]: Завантаження файлу 20251229-155807.avi до блобу 20251229-155807.avi...
+Dec 29 15:58:39 raspberrypi python[7916]: 2025-12-29 15:58:39,400 - DEBUG - vcam_worker.vcam_wrkr - Завантаження завершено!
+Dec 29 15:58:39 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Завантаження завершено!
+Dec 29 15:58:39 raspberrypi python[7916]: 2025-12-29 15:58:39,402 - DEBUG - vcam_worker.vcam_wrkr - Локальний файл 20251229-155807.avi видалено.
+Dec 29 15:58:39 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Локальний файл 20251229-155807.avi видалено.
+Dec 29 15:58:55 raspberrypi python[7916]: 2025-12-29 15:58:55,669 - DEBUG - vcam_worker.vcam_wrkr - Рух виявлено! Початок запису.
+Dec 29 15:58:55 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Рух виявлено! Початок запису.
+Dec 29 15:59:25 raspberrypi python[7916]: 2025-12-29 15:59:25,720 - DEBUG - vcam_worker.vcam_wrkr - Запис завершено.
+Dec 29 15:59:25 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Запис завершено.
+Dec 29 15:59:26 raspberrypi python[7916]: 2025-12-29 15:59:26,002 - DEBUG - vcam_worker.vcam_wrkr -
+Dec 29 15:59:26 raspberrypi python[7916]: Завантаження файлу 20251229-155855.avi до блобу 20251229-155855.avi...
+Dec 29 15:59:26 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:
+Dec 29 15:59:26 raspberrypi python[7916]: Завантаження файлу 20251229-155855.avi до блобу 20251229-155855.avi...
+Dec 29 15:59:29 raspberrypi python[7916]: 2025-12-29 15:59:29,531 - DEBUG - vcam_worker.vcam_wrkr - Завантаження завершено!
+Dec 29 15:59:29 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Завантаження завершено!
+Dec 29 15:59:29 raspberrypi python[7916]: 2025-12-29 15:59:29,534 - DEBUG - vcam_worker.vcam_wrkr - Локальний файл 20251229-155855.avi видалено.
+Dec 29 15:59:29 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Локальний файл 20251229-155855.avi видалено.
+Dec 29 16:00:20 raspberrypi python[7916]: 2025-12-29 16:00:20,472 - DEBUG - vcam_worker.vcam_wrkr - Рух виявлено! Початок запису.
+Dec 29 16:00:20 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Рух виявлено! Початок запису.
+Dec 29 16:00:30 raspberrypi python[7916]: WARNING:root:Потік перервався. Спроба перепідключення...
+Dec 29 16:00:30 raspberrypi python[7916]: [tcp @ 0x405344c0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:00:30 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:00:40 raspberrypi python[7916]: [tcp @ 0x405344c0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:00:40 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:00:50 raspberrypi python[7916]: [tcp @ 0x405344c0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:00:50 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:01:00 raspberrypi python[7916]: [tcp @ 0x405344c0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:01:00 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:01:16 raspberrypi python[7916]: 2025-12-29 16:01:16,000 - DEBUG - vcam_worker.vcam_wrkr - Рух виявлено! Початок запису.
+Dec 29 16:01:16 raspberrypi python[7916]: DEBUG:vcam_worker.vcam_wrkr:Рух виявлено! Початок запису.
+Dec 29 16:01:21 raspberrypi python[7916]: WARNING:root:Потік перервався. Спроба перепідключення...
+Dec 29 16:01:21 raspberrypi python[7916]: [tcp @ 0x405347b0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:01:21 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:01:31 raspberrypi python[7916]: [tcp @ 0x405347b0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:01:31 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:01:41 raspberrypi python[7916]: [tcp @ 0x405347b0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:01:41 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:01:51 raspberrypi python[7916]: [tcp @ 0x405347b0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:01:51 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:02:02 raspberrypi python[7916]: [tcp @ 0x405347b0] Connection to tcp://192.168.0.101:8554?timeout=0 failed: Connection refused
+Dec 29 16:02:02 raspberrypi python[7916]: ERROR:root:Камера недоступна. Наступна спроба через 10 секунд.
+Dec 29 16:02:12 raspberrypi systemd[1]: Stopping cameramonitor.service - RTSP Camera Monitoring Service...
+Dec 29 16:02:12 raspberrypi systemd[1]: cameramonitor.service: Deactivated successfully.
+Dec 29 16:02:12 raspberrypi systemd[1]: Stopped cameramonitor.service - RTSP Camera Monitoring Service.
+Dec 29 16:02:12 raspberrypi systemd[1]: cameramonitor.service: Consumed 17.347s CPU time.
+
+
+```
